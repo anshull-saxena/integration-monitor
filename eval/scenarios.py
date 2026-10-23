@@ -12,144 +12,195 @@ class EvaluationScenario(BaseModel):
     cycles_to_run: int = 1
 
 
-EVALUATION_SCENARIOS: List[EvaluationScenario] = [
-    EvaluationScenario(
-        scenario_id="SCEN-00-CLEAN",
-        name="Clean Baseline Run",
-        description="Normal operation without any injected faults; tests false-positive rate",
-        expected_fault_type="none",
-        faults=[],
-        cycles_to_run=2,
-    ),
-    EvaluationScenario(
-        scenario_id="SCEN-01-SCHEMA-DRIFT",
-        name="Schema Drift in Status Field",
-        description="Orders service renames 'status' to 'status_v2' causing parse/schema anomaly",
-        expected_fault_type="schema_drift",
-        faults=[
-            FaultConfig(
-                fault_type="schema_drift",
-                target_service="orders",
-                probability=1.0,
-                seed=101,
-                params={"field": "status", "new_field": "status_v2"},
+def generate_scenario_matrix(num_runs_per_type: int = 5) -> List[EvaluationScenario]:
+    """Generates an extensive, randomized test matrix with multiple seeds, varying noise levels,
+
+    subtle edge-cases, and clean baseline runs.
+    """
+    scenarios: List[EvaluationScenario] = []
+
+    # 1. Clean Baseline Runs (Normal operations)
+    for i in range(1, 11):
+        scenarios.append(
+            EvaluationScenario(
+                scenario_id=f"SCEN-CLEAN-{i:02d}",
+                name=f"Clean Production Run #{i}",
+                description="Clean upstream data across orders, suppliers, and shipments",
+                expected_fault_type="none",
+                faults=[],
+                cycles_to_run=1,
             )
-        ],
-        cycles_to_run=1,
-    ),
-    EvaluationScenario(
-        scenario_id="SCEN-02-NULL-SPIKE",
-        name="Null Spike in Mandatory Order Key",
-        description="Orders service emits null order_id keys violating nullability constraints",
-        expected_fault_type="null_spike",
-        faults=[
-            FaultConfig(
-                fault_type="null_spike",
-                target_service="orders",
-                probability=1.0,
-                seed=102,
-                params={"field": "order_id"},
+        )
+
+    # 2. Schema Drift variations (some subtle drift in optional vs mandatory fields)
+    for i in range(1, 6):
+        field = "status" if i % 2 == 0 else "contact_email"
+        scenarios.append(
+            EvaluationScenario(
+                scenario_id=f"SCEN-SCHEMA-{i:02d}",
+                name=f"Schema Drift #{i} on {field}",
+                description=f"Altered field name for {field}",
+                expected_fault_type="schema_drift" if field == "status" else "none",  # optional field drift shouldn't fail required checks
+                faults=[
+                    FaultConfig(
+                        fault_type="schema_drift",
+                        target_service="orders" if field == "status" else "suppliers",
+                        probability=1.0 if i < 5 else 0.4,
+                        seed=100 + i,
+                        params={"field": field, "new_field": f"{field}_v2"},
+                    )
+                ],
+                cycles_to_run=1,
             )
-        ],
-        cycles_to_run=1,
-    ),
-    EvaluationScenario(
-        scenario_id="SCEN-03-DUPLICATES",
-        name="Duplicate Primary Keys in Batch",
-        description="Shipments service emits duplicate shipment_id records",
-        expected_fault_type="duplicates",
-        faults=[
-            FaultConfig(
-                fault_type="duplicates",
-                target_service="shipments",
-                probability=1.0,
-                seed=103,
+        )
+
+    # 3. Null Spikes (various columns, some high rate, some borderline low rate)
+    for i in range(1, 6):
+        field = "order_id" if i % 2 == 1 else "supplier_id"
+        scenarios.append(
+            EvaluationScenario(
+                scenario_id=f"SCEN-NULL-{i:02d}",
+                name=f"Null Spike #{i} on {field}",
+                description=f"Injected nulls in {field}",
+                expected_fault_type="null_spike",
+                faults=[
+                    FaultConfig(
+                        fault_type="null_spike",
+                        target_service="orders",
+                        probability=0.3 + (i * 0.14),
+                        seed=200 + i,
+                        params={"field": field},
+                    )
+                ],
+                cycles_to_run=1,
             )
-        ],
-        cycles_to_run=1,
-    ),
-    EvaluationScenario(
-        scenario_id="SCEN-04-LATE-DATA",
-        name="Stale Timestamps (Late Data)",
-        description="Orders service emits records with updated_at timestamps 180 days in the past",
-        expected_fault_type="late_data",
-        faults=[
-            FaultConfig(
-                fault_type="late_data",
-                target_service="orders",
-                probability=1.0,
-                seed=104,
-                params={"days_ago": 180, "date_field": "updated_at"},
+        )
+
+    # 4. Duplicates (varying duplicate rate)
+    for i in range(1, 6):
+        scenarios.append(
+            EvaluationScenario(
+                scenario_id=f"SCEN-DUP-{i:02d}",
+                name=f"Duplicate Keys #{i}",
+                description="Emitted duplicate shipment primary keys",
+                expected_fault_type="duplicates",
+                faults=[
+                    FaultConfig(
+                        fault_type="duplicates",
+                        target_service="shipments",
+                        probability=0.5 if i == 1 else 1.0,
+                        seed=300 + i,
+                    )
+                ],
+                cycles_to_run=1,
             )
-        ],
-        cycles_to_run=1,
-    ),
-    EvaluationScenario(
-        scenario_id="SCEN-05-HTTP-500",
-        name="Upstream 500 Server Errors",
-        description="Orders service intermittently fails with 500 error; triggers tenacity retries and DLQ routing",
-        expected_fault_type="http_500",
-        faults=[
-            FaultConfig(
-                fault_type="http_500",
-                target_service="orders",
-                probability=1.0,
-                seed=105,
+        )
+
+    # 5. Late Data / Freshness Breaches (varying staleness from 15 days to 200 days)
+    for i in range(1, 6):
+        days = 15 if i == 1 else (30 * i)  # 15 days is below 30d threshold -> shouldn't trigger
+        scenarios.append(
+            EvaluationScenario(
+                scenario_id=f"SCEN-LATE-{i:02d}",
+                name=f"Late Data #{i} ({days} days old)",
+                description=f"Updated_at timestamps {days} days ago",
+                expected_fault_type="late_data" if days > 30 else "none",
+                faults=[
+                    FaultConfig(
+                        fault_type="late_data",
+                        target_service="orders",
+                        probability=1.0,
+                        seed=400 + i,
+                        params={"days_ago": days, "date_field": "updated_at"},
+                    )
+                ],
+                cycles_to_run=1,
             )
-        ],
-        cycles_to_run=1,
-    ),
-    EvaluationScenario(
-        scenario_id="SCEN-06-MISMATCHED-IDS",
-        name="Orphan Foreign Key References",
-        description="Orders service emits purchase orders referencing non-existent supplier IDs",
-        expected_fault_type="mismatched_ids",
-        faults=[
-            FaultConfig(
-                fault_type="mismatched_ids",
-                target_service="orders",
-                probability=1.0,
-                seed=106,
+        )
+
+    # 6. HTTP 500 / Network Failures
+    for i in range(1, 6):
+        scenarios.append(
+            EvaluationScenario(
+                scenario_id=f"SCEN-HTTP-{i:02d}",
+                name=f"HTTP 500 Server Outage #{i}",
+                description="Upstream 500 error triggered on orders service",
+                expected_fault_type="http_500",
+                faults=[
+                    FaultConfig(
+                        fault_type="http_500",
+                        target_service="orders",
+                        probability=1.0 if i > 1 else 0.5,
+                        seed=500 + i,
+                    )
+                ],
+                cycles_to_run=1,
             )
-        ],
-        cycles_to_run=1,
-    ),
-    EvaluationScenario(
-        scenario_id="SCEN-07-SILENT-CORRUPTION",
-        name="Quantity Mismatch and Negative Amounts",
-        description="Shipments emit quantities exceeding order items; orders emit negative total_amount",
-        expected_fault_type="silent_corruption",
-        faults=[
-            FaultConfig(
-                fault_type="silent_corruption",
-                target_service="orders",
-                probability=1.0,
-                seed=107,
-                params={"corruption_type": "negative_value"},
-            ),
-            FaultConfig(
-                fault_type="silent_corruption",
-                target_service="shipments",
-                probability=1.0,
-                seed=108,
-                params={"corruption_type": "quantity_mismatch"},
-            ),
-        ],
-        cycles_to_run=1,
-    ),
-    EvaluationScenario(
-        scenario_id="SCEN-08-VOLUME-DROP",
-        name="Sudden Upstream Volume Drop",
-        description="Orders service returns a truncated payload below baseline threshold",
-        expected_fault_type="volume_drop",
-        faults=[
-            FaultConfig(
-                fault_type="volume_drop",
-                target_service="orders",
-                probability=1.0,
-                seed=109,
+        )
+
+    # 7. Mismatched IDs / Orphan Foreign Keys
+    for i in range(1, 6):
+        scenarios.append(
+            EvaluationScenario(
+                scenario_id=f"SCEN-MISMATCH-{i:02d}",
+                name=f"Orphan Foreign Key #{i}",
+                description="Orders referencing nonexistent supplier",
+                expected_fault_type="mismatched_ids",
+                faults=[
+                    FaultConfig(
+                        fault_type="mismatched_ids",
+                        target_service="orders",
+                        probability=1.0 if i > 1 else 0.6,
+                        seed=600 + i,
+                    )
+                ],
+                cycles_to_run=1,
             )
-        ],
-        cycles_to_run=1,
-    ),
-]
+        )
+
+    # 8. Silent Corruption (Negative values vs Quantity mismatches)
+    for i in range(1, 6):
+        c_type = "negative_value" if i % 2 == 1 else "quantity_mismatch"
+        scenarios.append(
+            EvaluationScenario(
+                scenario_id=f"SCEN-CORRUPT-{i:02d}",
+                name=f"Silent Corruption #{i} ({c_type})",
+                description=f"Corrupted fields with {c_type}",
+                expected_fault_type="silent_corruption",
+                faults=[
+                    FaultConfig(
+                        fault_type="silent_corruption",
+                        target_service="orders" if c_type == "negative_value" else "shipments",
+                        probability=1.0 if i > 1 else 0.5,
+                        seed=700 + i,
+                        params={"corruption_type": c_type},
+                    )
+                ],
+                cycles_to_run=1,
+            )
+        )
+
+    # 9. Volume Drops (moderate drop vs severe drop)
+    for i in range(1, 6):
+        scenarios.append(
+            EvaluationScenario(
+                scenario_id=f"SCEN-VOL-{i:02d}",
+                name=f"Volume Drop #{i}",
+                description="Orders service returns truncated batch",
+                expected_fault_type="volume_drop",
+                faults=[
+                    FaultConfig(
+                        fault_type="volume_drop",
+                        target_service="orders",
+                        probability=1.0 if i > 1 else 0.5,
+                        seed=800 + i,
+                    )
+                ],
+                cycles_to_run=1,
+            )
+        )
+
+    return scenarios
+
+
+EVALUATION_SCENARIOS: List[EvaluationScenario] = generate_scenario_matrix()

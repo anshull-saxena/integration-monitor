@@ -1,13 +1,13 @@
 {
-  "total_scenarios_run": 9,
-  "clean_runs_evaluated": 1,
+  "total_scenarios_run": 50,
+  "clean_runs_evaluated": 14,
   "false_positive_rate_clean_runs": 0.0,
   "overall_mean_time_to_detect_cycles": 1.0,
   "metrics_by_fault_type": {
     "schema_drift": {
       "fault_type": "schema_drift",
-      "injected_count": 1,
-      "detected_count": 1,
+      "injected_count": 2,
+      "detected_count": 2,
       "false_positives": 0,
       "precision": 1.0,
       "recall": 1.0,
@@ -15,17 +15,17 @@
     },
     "null_spike": {
       "fault_type": "null_spike",
-      "injected_count": 1,
-      "detected_count": 1,
+      "injected_count": 5,
+      "detected_count": 4,
       "false_positives": 0,
       "precision": 1.0,
-      "recall": 1.0,
+      "recall": 0.8,
       "mean_time_to_detect_cycles": 1.0
     },
     "duplicates": {
       "fault_type": "duplicates",
-      "injected_count": 1,
-      "detected_count": 1,
+      "injected_count": 5,
+      "detected_count": 5,
       "false_positives": 0,
       "precision": 1.0,
       "recall": 1.0,
@@ -33,8 +33,8 @@
     },
     "late_data": {
       "fault_type": "late_data",
-      "injected_count": 1,
-      "detected_count": 1,
+      "injected_count": 4,
+      "detected_count": 4,
       "false_positives": 0,
       "precision": 1.0,
       "recall": 1.0,
@@ -42,17 +42,17 @@
     },
     "http_500": {
       "fault_type": "http_500",
-      "injected_count": 1,
-      "detected_count": 1,
+      "injected_count": 5,
+      "detected_count": 4,
       "false_positives": 0,
       "precision": 1.0,
-      "recall": 1.0,
+      "recall": 0.8,
       "mean_time_to_detect_cycles": 1.0
     },
     "mismatched_ids": {
       "fault_type": "mismatched_ids",
-      "injected_count": 1,
-      "detected_count": 1,
+      "injected_count": 5,
+      "detected_count": 5,
       "false_positives": 0,
       "precision": 1.0,
       "recall": 1.0,
@@ -60,17 +60,17 @@
     },
     "silent_corruption": {
       "fault_type": "silent_corruption",
-      "injected_count": 1,
-      "detected_count": 1,
+      "injected_count": 5,
+      "detected_count": 4,
       "false_positives": 0,
       "precision": 1.0,
-      "recall": 1.0,
+      "recall": 0.8,
       "mean_time_to_detect_cycles": 1.0
     },
     "volume_drop": {
       "fault_type": "volume_drop",
-      "injected_count": 1,
-      "detected_count": 1,
+      "injected_count": 5,
+      "detected_count": 5,
       "false_positives": 0,
       "precision": 1.0,
       "recall": 1.0,
@@ -79,67 +79,247 @@
   },
   "diagnostic_evaluations": [
     {
-      "incident_id": "INC-B672D720",
+      "incident_id": "INC-ACC8A9F2",
       "check_name": "orders_schema_status_drift",
       "ground_truth_fault": "schema_drift",
-      "raw_log_baseline": "ERROR: Check orders_schema_status_drift failed. Details: {\"rule_id\": \"RULE-SCHEMA-DRIFT-001\", \"description\": \"Orders records contain missing or empty status due to upstream schema drift\", \"violation_count\": 3, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"SUPP-002\", \"order_date\": \"2026-10-23 13:18:52.285388\", \"total_amount\": 67.5, \"items_count\": 2, \"status\": \"\", \"created_at\": \"2026-10-23 13:33:52.304538\", \"updated_at\": \"2026-10-23 13:28:52.285388\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"SUPP-003\", \"order_date\": \"2026-10-23 13:13:52.285388\", \"total_amount\": 85.0, \"items_count\": 3, \"status\": \"\", \"created_at\": \"2026-10-23 13:33:52.305288\", \"updated_at\": \"2026-10-23 13:23:52.285388\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"SUPP-004\", \"order_date\": \"2026-10-23 13:08:52.285388\", \"total_amount\": 102.5, \"items_count\": 4, \"status\": \"\", \"created_at\": \"2026-10-23 13:33:52.305503\", \"updated_at\": \"2026-10-23 13:18:52.285388\"}]}",
+      "raw_log_baseline": "ERROR: Check orders_schema_status_drift failed. Details: {\"rule_id\": \"RULE-SCHEMA-DRIFT-001\", \"description\": \"Orders records contain missing or empty status due to upstream schema drift\", \"violation_count\": 3, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"SUPP-002\", \"order_date\": \"2026-10-23 13:33:22.982785\", \"total_amount\": 67.5, \"items_count\": 2, \"status\": \"\", \"created_at\": \"2026-10-23 13:48:23.002096\", \"updated_at\": \"2026-10-23 13:43:22.982785\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"SUPP-003\", \"order_date\": \"2026-10-23 13:28:22.982785\", \"total_amount\": 85.0, \"items_count\": 3, \"status\": \"\", \"created_at\": \"2026-10-23 13:48:23.002868\", \"updated_at\": \"2026-10-23 13:38:22.982785\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"SUPP-004\", \"order_date\": \"2026-10-23 13:23:22.982785\", \"total_amount\": 102.5, \"items_count\": 4, \"status\": \"\", \"created_at\": \"2026-10-23 13:48:23.003091\", \"updated_at\": \"2026-10-23 13:33:22.982785\"}]}",
       "raw_log_correct": true,
       "llm_root_cause_summary": "Upstream schema drift detected: expected status column was omitted or renamed (e.g., status_v2).",
       "llm_suggested_fix": "Update schema mapping or coordinate upstream service deployment to preserve contract backwards compatibility.",
       "llm_correct": true
     },
     {
-      "incident_id": "INC-20830E4D",
+      "incident_id": "INC-0C3117A2",
+      "check_name": "orders_schema_status_drift",
+      "ground_truth_fault": "schema_drift",
+      "raw_log_baseline": "ERROR: Check orders_schema_status_drift failed. Details: {\"rule_id\": \"RULE-SCHEMA-DRIFT-001\", \"description\": \"Orders records contain missing or empty status due to upstream schema drift\", \"violation_count\": 3, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"SUPP-002\", \"order_date\": \"2026-10-23 13:33:23.091349\", \"total_amount\": 67.5, \"items_count\": 2, \"status\": \"\", \"created_at\": \"2026-10-23 13:48:23.110455\", \"updated_at\": \"2026-10-23 13:43:23.091349\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"SUPP-003\", \"order_date\": \"2026-10-23 13:28:23.091349\", \"total_amount\": 85.0, \"items_count\": 3, \"status\": \"\", \"created_at\": \"2026-10-23 13:48:23.115353\", \"updated_at\": \"2026-10-23 13:38:23.091349\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"SUPP-004\", \"order_date\": \"2026-10-23 13:23:23.091349\", \"total_amount\": 102.5, \"items_count\": 4, \"status\": \"\", \"created_at\": \"2026-10-23 13:48:23.115590\", \"updated_at\": \"2026-10-23 13:33:23.091349\"}]}",
+      "raw_log_correct": true,
+      "llm_root_cause_summary": "Upstream schema drift detected: expected status column was omitted or renamed (e.g., status_v2).",
+      "llm_suggested_fix": "Update schema mapping or coordinate upstream service deployment to preserve contract backwards compatibility.",
+      "llm_correct": true
+    },
+    {
+      "incident_id": "INC-CB4EFBB6",
+      "check_name": "orders_supplier_fk",
+      "ground_truth_fault": "null_spike",
+      "raw_log_baseline": "ERROR: Check orders_supplier_fk failed. Details: {\"rule_id\": \"RULE-RI-001\", \"description\": \"Order references a supplier_id that does not exist in suppliers warehouse table\", \"violation_count\": 4, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"None\", \"order_date\": \"2026-10-23 13:33:23.343733\", \"total_amount\": 67.5, \"items_count\": 2, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:23.369527\", \"updated_at\": \"2026-10-23 13:43:23.343733\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"None\", \"order_date\": \"2026-10-23 13:28:23.343733\", \"total_amount\": 85.0, \"items_count\": 3, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:23.370627\", \"updated_at\": \"2026-10-23 13:38:23.343733\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"None\", \"order_date\": \"2026-10-23 13:23:23.343733\", \"total_amount\": 102.5, \"items_count\": 4, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:23.370868\", \"updated_at\": \"2026-10-23 13:33:23.343733\"}, {\"order_id\": \"ORD-0004\", \"supplier_id\": \"None\", \"order_date\": \"2026-10-23 13:18:23.343733\", \"total_amount\": 120.0, \"items_count\": 5, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:23.371079\", \"updated_at\": \"2026-10-23 13:28:23.343733\"}]}",
+      "raw_log_correct": false,
+      "llm_root_cause_summary": "Referential integrity failure: ingested entity references an upstream ID (supplier_id or order_id) that does not exist in the warehouse.",
+      "llm_suggested_fix": "Audit upstream entity lifecycle ordering to enforce referential consistency and backfill missing master records.",
+      "llm_correct": false
+    },
+    {
+      "incident_id": "INC-77DB2815",
       "check_name": "orders_freshness_check",
       "ground_truth_fault": "late_data",
-      "raw_log_baseline": "ERROR: Check orders_freshness_check failed. Details: {\"rule_id\": \"RULE-ANOMALY-001\", \"description\": \"Orders data staleness exceeds max allowable threshold (30 days)\", \"violation_count\": 5, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"SUPP-002\", \"order_date\": \"2026-10-23 13:18:52.468583\", \"total_amount\": 67.5, \"items_count\": 2, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:33:52.486275\", \"updated_at\": \"2026-04-26 13:33:52.484304\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"SUPP-003\", \"order_date\": \"2026-10-23 13:13:52.468583\", \"total_amount\": 85.0, \"items_count\": 3, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:33:52.487130\", \"updated_at\": \"2026-04-26 13:33:52.484314\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"SUPP-004\", \"order_date\": \"2026-10-23 13:08:52.468583\", \"total_amount\": 102.5, \"items_count\": 4, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:33:52.487344\", \"updated_at\": \"2026-04-26 13:33:52.484315\"}, {\"order_id\": \"ORD-0004\", \"supplier_id\": \"SUPP-005\", \"order_date\": \"2026-10-23 13:03:52.468583\", \"total_amount\": 120.0, \"items_count\": 5, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:33:52.487542\", \"updated_at\": \"2026-04-26 13:33:52.484316\"}, {\"order_id\": \"ORD-0005\", \"supplier_id\": \"SUPP-006\", \"order_date\": \"2026-10-23 12:58:52.468583\", \"total_amount\": 137.5, \"items_count\": 6, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:33:52.487727\", \"updated_at\": \"2026-04-26 13:33:52.484317\"}]}",
+      "raw_log_baseline": "ERROR: Check orders_freshness_check failed. Details: {\"rule_id\": \"RULE-ANOMALY-001\", \"description\": \"Orders data staleness exceeds max allowable threshold (30 days)\", \"violation_count\": 5, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"SUPP-002\", \"order_date\": \"2026-10-23 13:33:23.788705\", \"total_amount\": 67.5, \"items_count\": 2, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:23.807934\", \"updated_at\": \"2026-08-24 13:48:23.806026\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"SUPP-003\", \"order_date\": \"2026-10-23 13:28:23.788705\", \"total_amount\": 85.0, \"items_count\": 3, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:23.808757\", \"updated_at\": \"2026-08-24 13:48:23.806034\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"SUPP-004\", \"order_date\": \"2026-10-23 13:23:23.788705\", \"total_amount\": 102.5, \"items_count\": 4, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:23.808994\", \"updated_at\": \"2026-08-24 13:48:23.806036\"}, {\"order_id\": \"ORD-0004\", \"supplier_id\": \"SUPP-005\", \"order_date\": \"2026-10-23 13:18:23.788705\", \"total_amount\": 120.0, \"items_count\": 5, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:23.809197\", \"updated_at\": \"2026-08-24 13:48:23.806036\"}, {\"order_id\": \"ORD-0005\", \"supplier_id\": \"SUPP-006\", \"order_date\": \"2026-10-23 13:13:23.788705\", \"total_amount\": 137.5, \"items_count\": 6, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:23.809378\", \"updated_at\": \"2026-08-24 13:48:23.806038\"}]}",
       "raw_log_correct": true,
       "llm_root_cause_summary": "Late or stale data anomaly: records have timestamps significantly older than the maximum freshness threshold.",
       "llm_suggested_fix": "Investigate delayed upstream event emission, dead-letter re-delivery queues, or timezone conversion bugs.",
       "llm_correct": true
     },
     {
-      "incident_id": "INC-0998C2A1",
+      "incident_id": "INC-C6071E60",
+      "check_name": "orders_freshness_check",
+      "ground_truth_fault": "late_data",
+      "raw_log_baseline": "ERROR: Check orders_freshness_check failed. Details: {\"rule_id\": \"RULE-ANOMALY-001\", \"description\": \"Orders data staleness exceeds max allowable threshold (30 days)\", \"violation_count\": 5, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"SUPP-002\", \"order_date\": \"2026-10-23 13:33:23.867415\", \"total_amount\": 67.5, \"items_count\": 2, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:23.884070\", \"updated_at\": \"2026-07-25 13:48:23.882059\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"SUPP-003\", \"order_date\": \"2026-10-23 13:28:23.867415\", \"total_amount\": 85.0, \"items_count\": 3, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:23.885480\", \"updated_at\": \"2026-07-25 13:48:23.882068\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"SUPP-004\", \"order_date\": \"2026-10-23 13:23:23.867415\", \"total_amount\": 102.5, \"items_count\": 4, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:23.885718\", \"updated_at\": \"2026-07-25 13:48:23.882070\"}, {\"order_id\": \"ORD-0004\", \"supplier_id\": \"SUPP-005\", \"order_date\": \"2026-10-23 13:18:23.867415\", \"total_amount\": 120.0, \"items_count\": 5, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:23.885937\", \"updated_at\": \"2026-07-25 13:48:23.882071\"}, {\"order_id\": \"ORD-0005\", \"supplier_id\": \"SUPP-006\", \"order_date\": \"2026-10-23 13:13:23.867415\", \"total_amount\": 137.5, \"items_count\": 6, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:23.886139\", \"updated_at\": \"2026-07-25 13:48:23.882072\"}]}",
+      "raw_log_correct": true,
+      "llm_root_cause_summary": "Late or stale data anomaly: records have timestamps significantly older than the maximum freshness threshold.",
+      "llm_suggested_fix": "Investigate delayed upstream event emission, dead-letter re-delivery queues, or timezone conversion bugs.",
+      "llm_correct": true
+    },
+    {
+      "incident_id": "INC-7CA4C270",
+      "check_name": "orders_freshness_check",
+      "ground_truth_fault": "late_data",
+      "raw_log_baseline": "ERROR: Check orders_freshness_check failed. Details: {\"rule_id\": \"RULE-ANOMALY-001\", \"description\": \"Orders data staleness exceeds max allowable threshold (30 days)\", \"violation_count\": 5, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"SUPP-002\", \"order_date\": \"2026-10-23 13:33:23.912530\", \"total_amount\": 67.5, \"items_count\": 2, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:23.932555\", \"updated_at\": \"2026-06-25 13:48:23.930405\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"SUPP-003\", \"order_date\": \"2026-10-23 13:28:23.912530\", \"total_amount\": 85.0, \"items_count\": 3, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:23.933318\", \"updated_at\": \"2026-06-25 13:48:23.930412\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"SUPP-004\", \"order_date\": \"2026-10-23 13:23:23.912530\", \"total_amount\": 102.5, \"items_count\": 4, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:23.933554\", \"updated_at\": \"2026-06-25 13:48:23.930414\"}, {\"order_id\": \"ORD-0004\", \"supplier_id\": \"SUPP-005\", \"order_date\": \"2026-10-23 13:18:23.912530\", \"total_amount\": 120.0, \"items_count\": 5, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:23.933769\", \"updated_at\": \"2026-06-25 13:48:23.930415\"}, {\"order_id\": \"ORD-0005\", \"supplier_id\": \"SUPP-006\", \"order_date\": \"2026-10-23 13:13:23.912530\", \"total_amount\": 137.5, \"items_count\": 6, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:23.933971\", \"updated_at\": \"2026-06-25 13:48:23.930416\"}]}",
+      "raw_log_correct": true,
+      "llm_root_cause_summary": "Late or stale data anomaly: records have timestamps significantly older than the maximum freshness threshold.",
+      "llm_suggested_fix": "Investigate delayed upstream event emission, dead-letter re-delivery queues, or timezone conversion bugs.",
+      "llm_correct": true
+    },
+    {
+      "incident_id": "INC-032FD74F",
+      "check_name": "orders_freshness_check",
+      "ground_truth_fault": "late_data",
+      "raw_log_baseline": "ERROR: Check orders_freshness_check failed. Details: {\"rule_id\": \"RULE-ANOMALY-001\", \"description\": \"Orders data staleness exceeds max allowable threshold (30 days)\", \"violation_count\": 5, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"SUPP-002\", \"order_date\": \"2026-10-23 13:33:23.967825\", \"total_amount\": 67.5, \"items_count\": 2, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:23.991031\", \"updated_at\": \"2026-05-26 13:48:23.989219\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"SUPP-003\", \"order_date\": \"2026-10-23 13:28:23.967825\", \"total_amount\": 85.0, \"items_count\": 3, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:24.007616\", \"updated_at\": \"2026-05-26 13:48:23.989227\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"SUPP-004\", \"order_date\": \"2026-10-23 13:23:23.967825\", \"total_amount\": 102.5, \"items_count\": 4, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.007937\", \"updated_at\": \"2026-05-26 13:48:23.989229\"}, {\"order_id\": \"ORD-0004\", \"supplier_id\": \"SUPP-005\", \"order_date\": \"2026-10-23 13:18:23.967825\", \"total_amount\": 120.0, \"items_count\": 5, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:24.008167\", \"updated_at\": \"2026-05-26 13:48:23.989230\"}, {\"order_id\": \"ORD-0005\", \"supplier_id\": \"SUPP-006\", \"order_date\": \"2026-10-23 13:13:23.967825\", \"total_amount\": 137.5, \"items_count\": 6, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.008394\", \"updated_at\": \"2026-05-26 13:48:23.989231\"}]}",
+      "raw_log_correct": true,
+      "llm_root_cause_summary": "Late or stale data anomaly: records have timestamps significantly older than the maximum freshness threshold.",
+      "llm_suggested_fix": "Investigate delayed upstream event emission, dead-letter re-delivery queues, or timezone conversion bugs.",
+      "llm_correct": true
+    },
+    {
+      "incident_id": "INC-2F1CDF9D",
       "check_name": "orders_volume_drop_check",
       "ground_truth_fault": "http_500",
       "raw_log_baseline": "ERROR: Check orders_volume_drop_check failed. Details: {\"rule_id\": \"RULE-ANOMALY-002\", \"description\": \"Orders table volume falls below expected minimum threshold (Found 0 rows, expected >= 5)\", \"violation_count\": 1, \"sample_records\": [{\"table\": \"orders\", \"count\": 0, \"expected_min\": 5}]}",
       "raw_log_correct": false,
-      "llm_root_cause_summary": "Data volume anomaly: ingested record count dropped drastically below expected operating volume threshold.",
-      "llm_suggested_fix": "Verify upstream service availability, network connectivity, and check upstream database replication queues.",
-      "llm_correct": false
+      "llm_root_cause_summary": "Upstream 500 outage: orders service experienced internal server errors resulting in uningested batches and zero warehouse volume.",
+      "llm_suggested_fix": "Inspect upstream orders microservice error logs, check upstream database connections, and review recent API deployments.",
+      "llm_correct": true
     },
     {
-      "incident_id": "INC-47A8AAC1",
+      "incident_id": "INC-47145DF1",
+      "check_name": "orders_volume_drop_check",
+      "ground_truth_fault": "http_500",
+      "raw_log_baseline": "ERROR: Check orders_volume_drop_check failed. Details: {\"rule_id\": \"RULE-ANOMALY-002\", \"description\": \"Orders table volume falls below expected minimum threshold (Found 0 rows, expected >= 5)\", \"violation_count\": 1, \"sample_records\": [{\"table\": \"orders\", \"count\": 0, \"expected_min\": 5}]}",
+      "raw_log_correct": false,
+      "llm_root_cause_summary": "Upstream 500 outage: orders service experienced internal server errors resulting in uningested batches and zero warehouse volume.",
+      "llm_suggested_fix": "Inspect upstream orders microservice error logs, check upstream database connections, and review recent API deployments.",
+      "llm_correct": true
+    },
+    {
+      "incident_id": "INC-5057902E",
+      "check_name": "orders_volume_drop_check",
+      "ground_truth_fault": "http_500",
+      "raw_log_baseline": "ERROR: Check orders_volume_drop_check failed. Details: {\"rule_id\": \"RULE-ANOMALY-002\", \"description\": \"Orders table volume falls below expected minimum threshold (Found 0 rows, expected >= 5)\", \"violation_count\": 1, \"sample_records\": [{\"table\": \"orders\", \"count\": 0, \"expected_min\": 5}]}",
+      "raw_log_correct": false,
+      "llm_root_cause_summary": "Upstream 500 outage: orders service experienced internal server errors resulting in uningested batches and zero warehouse volume.",
+      "llm_suggested_fix": "Inspect upstream orders microservice error logs, check upstream database connections, and review recent API deployments.",
+      "llm_correct": true
+    },
+    {
+      "incident_id": "INC-CDC39EBF",
+      "check_name": "orders_volume_drop_check",
+      "ground_truth_fault": "http_500",
+      "raw_log_baseline": "ERROR: Check orders_volume_drop_check failed. Details: {\"rule_id\": \"RULE-ANOMALY-002\", \"description\": \"Orders table volume falls below expected minimum threshold (Found 0 rows, expected >= 5)\", \"violation_count\": 1, \"sample_records\": [{\"table\": \"orders\", \"count\": 0, \"expected_min\": 5}]}",
+      "raw_log_correct": false,
+      "llm_root_cause_summary": "Upstream 500 outage: orders service experienced internal server errors resulting in uningested batches and zero warehouse volume.",
+      "llm_suggested_fix": "Inspect upstream orders microservice error logs, check upstream database connections, and review recent API deployments.",
+      "llm_correct": true
+    },
+    {
+      "incident_id": "INC-78BCB1C1",
       "check_name": "orders_supplier_fk",
       "ground_truth_fault": "mismatched_ids",
-      "raw_log_baseline": "ERROR: Check orders_supplier_fk failed. Details: {\"rule_id\": \"RULE-RI-001\", \"description\": \"Order references a supplier_id that does not exist in suppliers warehouse table\", \"violation_count\": 4, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:18:52.548257\", \"total_amount\": 67.5, \"items_count\": 2, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:33:52.574140\", \"updated_at\": \"2026-10-23 13:28:52.548257\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:13:52.548257\", \"total_amount\": 85.0, \"items_count\": 3, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:33:52.577658\", \"updated_at\": \"2026-10-23 13:23:52.548257\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:08:52.548257\", \"total_amount\": 102.5, \"items_count\": 4, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:33:52.577912\", \"updated_at\": \"2026-10-23 13:18:52.548257\"}, {\"order_id\": \"ORD-0004\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:03:52.548257\", \"total_amount\": 120.0, \"items_count\": 5, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:33:52.578114\", \"updated_at\": \"2026-10-23 13:13:52.548257\"}]}",
+      "raw_log_baseline": "ERROR: Check orders_supplier_fk failed. Details: {\"rule_id\": \"RULE-RI-001\", \"description\": \"Order references a supplier_id that does not exist in suppliers warehouse table\", \"violation_count\": 4, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:33:24.227943\", \"total_amount\": 67.5, \"items_count\": 2, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.245432\", \"updated_at\": \"2026-10-23 13:43:24.227943\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:28:24.227943\", \"total_amount\": 85.0, \"items_count\": 3, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:24.246165\", \"updated_at\": \"2026-10-23 13:38:24.227943\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:23:24.227943\", \"total_amount\": 102.5, \"items_count\": 4, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.246394\", \"updated_at\": \"2026-10-23 13:33:24.227943\"}, {\"order_id\": \"ORD-0004\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:18:24.227943\", \"total_amount\": 120.0, \"items_count\": 5, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:24.246614\", \"updated_at\": \"2026-10-23 13:28:24.227943\"}]}",
       "raw_log_correct": true,
       "llm_root_cause_summary": "Referential integrity failure: ingested entity references an upstream ID (supplier_id or order_id) that does not exist in the warehouse.",
       "llm_suggested_fix": "Audit upstream entity lifecycle ordering to enforce referential consistency and backfill missing master records.",
       "llm_correct": true
     },
     {
-      "incident_id": "INC-355FA65A",
-      "check_name": "orders_amount_type_and_range",
-      "ground_truth_fault": "silent_corruption",
-      "raw_log_baseline": "ERROR: Check orders_amount_type_and_range failed. Details: {\"rule_id\": \"RULE-SCHEMA-001\", \"description\": \"Orders total_amount must be a non-negative numeric float\", \"violation_count\": 3, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"SUPP-002\", \"order_date\": \"2026-10-23 13:18:52.609326\", \"total_amount\": -67.5, \"items_count\": 2, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:33:52.624218\", \"updated_at\": \"2026-10-23 13:28:52.609326\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"SUPP-003\", \"order_date\": \"2026-10-23 13:13:52.609326\", \"total_amount\": -85.0, \"items_count\": 3, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:33:52.627770\", \"updated_at\": \"2026-10-23 13:23:52.609326\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"SUPP-004\", \"order_date\": \"2026-10-23 13:08:52.609326\", \"total_amount\": -102.5, \"items_count\": 4, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:33:52.627981\", \"updated_at\": \"2026-10-23 13:18:52.609326\"}]}",
+      "incident_id": "INC-7E6B5AB3",
+      "check_name": "orders_supplier_fk",
+      "ground_truth_fault": "mismatched_ids",
+      "raw_log_baseline": "ERROR: Check orders_supplier_fk failed. Details: {\"rule_id\": \"RULE-RI-001\", \"description\": \"Order references a supplier_id that does not exist in suppliers warehouse table\", \"violation_count\": 4, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:33:24.287274\", \"total_amount\": 67.5, \"items_count\": 2, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.301935\", \"updated_at\": \"2026-10-23 13:43:24.287274\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:28:24.287274\", \"total_amount\": 85.0, \"items_count\": 3, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:24.302994\", \"updated_at\": \"2026-10-23 13:38:24.287274\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:23:24.287274\", \"total_amount\": 102.5, \"items_count\": 4, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.303241\", \"updated_at\": \"2026-10-23 13:33:24.287274\"}, {\"order_id\": \"ORD-0004\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:18:24.287274\", \"total_amount\": 120.0, \"items_count\": 5, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:24.303444\", \"updated_at\": \"2026-10-23 13:28:24.287274\"}]}",
       "raw_log_correct": true,
-      "llm_root_cause_summary": "Silent value corruption: numerical values violated valid business domain ranges (e.g., negative order total_amount).",
-      "llm_suggested_fix": "Audit billing calculation logic in upstream orders service to reject negative financial amounts.",
+      "llm_root_cause_summary": "Referential integrity failure: ingested entity references an upstream ID (supplier_id or order_id) that does not exist in the warehouse.",
+      "llm_suggested_fix": "Audit upstream entity lifecycle ordering to enforce referential consistency and backfill missing master records.",
       "llm_correct": true
     },
     {
-      "incident_id": "INC-5C7A9B4B",
+      "incident_id": "INC-9331D6C3",
+      "check_name": "orders_supplier_fk",
+      "ground_truth_fault": "mismatched_ids",
+      "raw_log_baseline": "ERROR: Check orders_supplier_fk failed. Details: {\"rule_id\": \"RULE-RI-001\", \"description\": \"Order references a supplier_id that does not exist in suppliers warehouse table\", \"violation_count\": 4, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:33:24.364574\", \"total_amount\": 67.5, \"items_count\": 2, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.386869\", \"updated_at\": \"2026-10-23 13:43:24.364574\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:28:24.364574\", \"total_amount\": 85.0, \"items_count\": 3, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:24.389795\", \"updated_at\": \"2026-10-23 13:38:24.364574\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:23:24.364574\", \"total_amount\": 102.5, \"items_count\": 4, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.390015\", \"updated_at\": \"2026-10-23 13:33:24.364574\"}, {\"order_id\": \"ORD-0004\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:18:24.364574\", \"total_amount\": 120.0, \"items_count\": 5, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:24.390210\", \"updated_at\": \"2026-10-23 13:28:24.364574\"}]}",
+      "raw_log_correct": true,
+      "llm_root_cause_summary": "Referential integrity failure: ingested entity references an upstream ID (supplier_id or order_id) that does not exist in the warehouse.",
+      "llm_suggested_fix": "Audit upstream entity lifecycle ordering to enforce referential consistency and backfill missing master records.",
+      "llm_correct": true
+    },
+    {
+      "incident_id": "INC-65F93ECB",
+      "check_name": "orders_supplier_fk",
+      "ground_truth_fault": "mismatched_ids",
+      "raw_log_baseline": "ERROR: Check orders_supplier_fk failed. Details: {\"rule_id\": \"RULE-RI-001\", \"description\": \"Order references a supplier_id that does not exist in suppliers warehouse table\", \"violation_count\": 4, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:33:24.453767\", \"total_amount\": 67.5, \"items_count\": 2, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.468386\", \"updated_at\": \"2026-10-23 13:43:24.453767\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:28:24.453767\", \"total_amount\": 85.0, \"items_count\": 3, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:24.469802\", \"updated_at\": \"2026-10-23 13:38:24.453767\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:23:24.453767\", \"total_amount\": 102.5, \"items_count\": 4, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.470022\", \"updated_at\": \"2026-10-23 13:33:24.453767\"}, {\"order_id\": \"ORD-0004\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:18:24.453767\", \"total_amount\": 120.0, \"items_count\": 5, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:24.470217\", \"updated_at\": \"2026-10-23 13:28:24.453767\"}]}",
+      "raw_log_correct": true,
+      "llm_root_cause_summary": "Referential integrity failure: ingested entity references an upstream ID (supplier_id or order_id) that does not exist in the warehouse.",
+      "llm_suggested_fix": "Audit upstream entity lifecycle ordering to enforce referential consistency and backfill missing master records.",
+      "llm_correct": true
+    },
+    {
+      "incident_id": "INC-FEF78CE2",
+      "check_name": "orders_supplier_fk",
+      "ground_truth_fault": "mismatched_ids",
+      "raw_log_baseline": "ERROR: Check orders_supplier_fk failed. Details: {\"rule_id\": \"RULE-RI-001\", \"description\": \"Order references a supplier_id that does not exist in suppliers warehouse table\", \"violation_count\": 4, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:33:24.501353\", \"total_amount\": 67.5, \"items_count\": 2, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.521689\", \"updated_at\": \"2026-10-23 13:43:24.501353\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:28:24.501353\", \"total_amount\": 85.0, \"items_count\": 3, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:24.522612\", \"updated_at\": \"2026-10-23 13:38:24.501353\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:23:24.501353\", \"total_amount\": 102.5, \"items_count\": 4, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.522846\", \"updated_at\": \"2026-10-23 13:33:24.501353\"}, {\"order_id\": \"ORD-0004\", \"supplier_id\": \"SUPP-GHOST-999\", \"order_date\": \"2026-10-23 13:18:24.501353\", \"total_amount\": 120.0, \"items_count\": 5, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:24.523059\", \"updated_at\": \"2026-10-23 13:28:24.501353\"}]}",
+      "raw_log_correct": true,
+      "llm_root_cause_summary": "Referential integrity failure: ingested entity references an upstream ID (supplier_id or order_id) that does not exist in the warehouse.",
+      "llm_suggested_fix": "Audit upstream entity lifecycle ordering to enforce referential consistency and backfill missing master records.",
+      "llm_correct": true
+    },
+    {
+      "incident_id": "INC-CCD4B0BC",
       "check_name": "shipment_order_quantity_reconciliation",
       "ground_truth_fault": "silent_corruption",
-      "raw_log_baseline": "ERROR: Check shipment_order_quantity_reconciliation failed. Details: {\"rule_id\": \"RULE-RECON-001\", \"description\": \"Shipment quantity significantly mismatches order items count\", \"violation_count\": 3, \"sample_records\": [{\"shipment_id\": \"SHIP-0001\", \"order_id\": \"ORD-0001\", \"shipped_at\": \"2026-10-23 13:23:52.609480\", \"quantity\": 99999, \"carrier\": \"DHL\", \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:33:52.624218\", \"updated_at\": \"2026-10-23 13:28:52.609326\", \"supplier_id\": \"SUPP-002\", \"order_date\": \"2026-10-23 13:18:52.609326\", \"total_amount\": -67.5, \"items_count\": 2}, {\"shipment_id\": \"SHIP-0002\", \"order_id\": \"ORD-0002\", \"shipped_at\": \"2026-10-23 13:18:52.609480\", \"quantity\": 99999, \"carrier\": \"UPS\", \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:33:52.627770\", \"updated_at\": \"2026-10-23 13:23:52.609326\", \"supplier_id\": \"SUPP-003\", \"order_date\": \"2026-10-23 13:13:52.609326\", \"total_amount\": -85.0, \"items_count\": 3}, {\"shipment_id\": \"SHIP-0003\", \"order_id\": \"ORD-0003\", \"shipped_at\": \"2026-10-23 13:13:52.609480\", \"quantity\": 99999, \"carrier\": \"Maersk\", \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:33:52.627981\", \"updated_at\": \"2026-10-23 13:18:52.609326\", \"supplier_id\": \"SUPP-004\", \"order_date\": \"2026-10-23 13:08:52.609326\", \"total_amount\": -102.5, \"items_count\": 4}]}",
+      "raw_log_baseline": "ERROR: Check shipment_order_quantity_reconciliation failed. Details: {\"rule_id\": \"RULE-RECON-001\", \"description\": \"Shipment quantity significantly mismatches order items count\", \"violation_count\": 3, \"sample_records\": [{\"shipment_id\": \"SHIP-0001\", \"order_id\": \"ORD-0001\", \"shipped_at\": \"2026-10-23 13:38:24.631230\", \"quantity\": 99999, \"carrier\": \"DHL\", \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.658157\", \"updated_at\": \"2026-10-23 13:43:24.631067\", \"supplier_id\": \"SUPP-002\", \"order_date\": \"2026-10-23 13:33:24.631067\", \"total_amount\": 67.5, \"items_count\": 2}, {\"shipment_id\": \"SHIP-0002\", \"order_id\": \"ORD-0002\", \"shipped_at\": \"2026-10-23 13:33:24.631230\", \"quantity\": 99999, \"carrier\": \"UPS\", \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:24.660891\", \"updated_at\": \"2026-10-23 13:38:24.631067\", \"supplier_id\": \"SUPP-003\", \"order_date\": \"2026-10-23 13:28:24.631067\", \"total_amount\": 85.0, \"items_count\": 3}, {\"shipment_id\": \"SHIP-0003\", \"order_id\": \"ORD-0003\", \"shipped_at\": \"2026-10-23 13:28:24.631230\", \"quantity\": 99999, \"carrier\": \"Maersk\", \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.661120\", \"updated_at\": \"2026-10-23 13:33:24.631067\", \"supplier_id\": \"SUPP-004\", \"order_date\": \"2026-10-23 13:23:24.631067\", \"total_amount\": 102.5, \"items_count\": 4}]}",
       "raw_log_correct": true,
       "llm_root_cause_summary": "Cross-system reconciliation mismatch detected: discrepancies found between shipment status/quantity and purchase order records.",
       "llm_suggested_fix": "Align order cancellation webhooks with dispatch management to prevent deliveries on cancelled orders and reconcile quantities.",
       "llm_correct": true
     },
     {
-      "incident_id": "INC-2555D28E",
+      "incident_id": "INC-5D1666C7",
+      "check_name": "orders_amount_type_and_range",
+      "ground_truth_fault": "silent_corruption",
+      "raw_log_baseline": "ERROR: Check orders_amount_type_and_range failed. Details: {\"rule_id\": \"RULE-SCHEMA-001\", \"description\": \"Orders total_amount must be a non-negative numeric float\", \"violation_count\": 3, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"SUPP-002\", \"order_date\": \"2026-10-23 13:33:24.696174\", \"total_amount\": -67.5, \"items_count\": 2, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.716508\", \"updated_at\": \"2026-10-23 13:43:24.696174\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"SUPP-003\", \"order_date\": \"2026-10-23 13:28:24.696174\", \"total_amount\": -85.0, \"items_count\": 3, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:24.717833\", \"updated_at\": \"2026-10-23 13:38:24.696174\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"SUPP-004\", \"order_date\": \"2026-10-23 13:23:24.696174\", \"total_amount\": -102.5, \"items_count\": 4, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.718060\", \"updated_at\": \"2026-10-23 13:33:24.696174\"}]}",
+      "raw_log_correct": true,
+      "llm_root_cause_summary": "Silent value corruption: numerical values violated valid business domain ranges (e.g., negative order total_amount).",
+      "llm_suggested_fix": "Audit billing calculation logic in upstream orders service to reject negative financial amounts.",
+      "llm_correct": true
+    },
+    {
+      "incident_id": "INC-88C2E272",
+      "check_name": "shipment_order_quantity_reconciliation",
+      "ground_truth_fault": "silent_corruption",
+      "raw_log_baseline": "ERROR: Check shipment_order_quantity_reconciliation failed. Details: {\"rule_id\": \"RULE-RECON-001\", \"description\": \"Shipment quantity significantly mismatches order items count\", \"violation_count\": 3, \"sample_records\": [{\"shipment_id\": \"SHIP-0001\", \"order_id\": \"ORD-0001\", \"shipped_at\": \"2026-10-23 13:38:24.748200\", \"quantity\": 99999, \"carrier\": \"DHL\", \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.761913\", \"updated_at\": \"2026-10-23 13:43:24.748038\", \"supplier_id\": \"SUPP-002\", \"order_date\": \"2026-10-23 13:33:24.748038\", \"total_amount\": 67.5, \"items_count\": 2}, {\"shipment_id\": \"SHIP-0002\", \"order_id\": \"ORD-0002\", \"shipped_at\": \"2026-10-23 13:33:24.748200\", \"quantity\": 99999, \"carrier\": \"UPS\", \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:24.763337\", \"updated_at\": \"2026-10-23 13:38:24.748038\", \"supplier_id\": \"SUPP-003\", \"order_date\": \"2026-10-23 13:28:24.748038\", \"total_amount\": 85.0, \"items_count\": 3}, {\"shipment_id\": \"SHIP-0003\", \"order_id\": \"ORD-0003\", \"shipped_at\": \"2026-10-23 13:28:24.748200\", \"quantity\": 99999, \"carrier\": \"Maersk\", \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.763574\", \"updated_at\": \"2026-10-23 13:33:24.748038\", \"supplier_id\": \"SUPP-004\", \"order_date\": \"2026-10-23 13:23:24.748038\", \"total_amount\": 102.5, \"items_count\": 4}]}",
+      "raw_log_correct": true,
+      "llm_root_cause_summary": "Cross-system reconciliation mismatch detected: discrepancies found between shipment status/quantity and purchase order records.",
+      "llm_suggested_fix": "Align order cancellation webhooks with dispatch management to prevent deliveries on cancelled orders and reconcile quantities.",
+      "llm_correct": true
+    },
+    {
+      "incident_id": "INC-7701BFA3",
+      "check_name": "orders_amount_type_and_range",
+      "ground_truth_fault": "silent_corruption",
+      "raw_log_baseline": "ERROR: Check orders_amount_type_and_range failed. Details: {\"rule_id\": \"RULE-SCHEMA-001\", \"description\": \"Orders total_amount must be a non-negative numeric float\", \"violation_count\": 3, \"sample_records\": [{\"order_id\": \"ORD-0001\", \"supplier_id\": \"SUPP-002\", \"order_date\": \"2026-10-23 13:33:24.795632\", \"total_amount\": -67.5, \"items_count\": 2, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.812181\", \"updated_at\": \"2026-10-23 13:43:24.795632\"}, {\"order_id\": \"ORD-0002\", \"supplier_id\": \"SUPP-003\", \"order_date\": \"2026-10-23 13:28:24.795632\", \"total_amount\": -85.0, \"items_count\": 3, \"status\": \"CONFIRMED\", \"created_at\": \"2026-10-23 13:48:24.813192\", \"updated_at\": \"2026-10-23 13:38:24.795632\"}, {\"order_id\": \"ORD-0003\", \"supplier_id\": \"SUPP-004\", \"order_date\": \"2026-10-23 13:23:24.795632\", \"total_amount\": -102.5, \"items_count\": 4, \"status\": \"PENDING\", \"created_at\": \"2026-10-23 13:48:24.813456\", \"updated_at\": \"2026-10-23 13:33:24.795632\"}]}",
+      "raw_log_correct": true,
+      "llm_root_cause_summary": "Silent value corruption: numerical values violated valid business domain ranges (e.g., negative order total_amount).",
+      "llm_suggested_fix": "Audit billing calculation logic in upstream orders service to reject negative financial amounts.",
+      "llm_correct": true
+    },
+    {
+      "incident_id": "INC-F1025A27",
+      "check_name": "orders_volume_drop_check",
+      "ground_truth_fault": "volume_drop",
+      "raw_log_baseline": "ERROR: Check orders_volume_drop_check failed. Details: {\"rule_id\": \"RULE-ANOMALY-002\", \"description\": \"Orders table volume falls below expected minimum threshold (Found 1 rows, expected >= 5)\", \"violation_count\": 1, \"sample_records\": [{\"table\": \"orders\", \"count\": 1, \"expected_min\": 5}]}",
+      "raw_log_correct": true,
+      "llm_root_cause_summary": "Data volume anomaly: ingested record count dropped drastically below expected operating volume threshold.",
+      "llm_suggested_fix": "Verify upstream service availability, network connectivity, and check upstream database replication queues.",
+      "llm_correct": true
+    },
+    {
+      "incident_id": "INC-C0EE78D5",
+      "check_name": "orders_volume_drop_check",
+      "ground_truth_fault": "volume_drop",
+      "raw_log_baseline": "ERROR: Check orders_volume_drop_check failed. Details: {\"rule_id\": \"RULE-ANOMALY-002\", \"description\": \"Orders table volume falls below expected minimum threshold (Found 1 rows, expected >= 5)\", \"violation_count\": 1, \"sample_records\": [{\"table\": \"orders\", \"count\": 1, \"expected_min\": 5}]}",
+      "raw_log_correct": true,
+      "llm_root_cause_summary": "Data volume anomaly: ingested record count dropped drastically below expected operating volume threshold.",
+      "llm_suggested_fix": "Verify upstream service availability, network connectivity, and check upstream database replication queues.",
+      "llm_correct": true
+    },
+    {
+      "incident_id": "INC-712151AC",
+      "check_name": "orders_volume_drop_check",
+      "ground_truth_fault": "volume_drop",
+      "raw_log_baseline": "ERROR: Check orders_volume_drop_check failed. Details: {\"rule_id\": \"RULE-ANOMALY-002\", \"description\": \"Orders table volume falls below expected minimum threshold (Found 1 rows, expected >= 5)\", \"violation_count\": 1, \"sample_records\": [{\"table\": \"orders\", \"count\": 1, \"expected_min\": 5}]}",
+      "raw_log_correct": true,
+      "llm_root_cause_summary": "Data volume anomaly: ingested record count dropped drastically below expected operating volume threshold.",
+      "llm_suggested_fix": "Verify upstream service availability, network connectivity, and check upstream database replication queues.",
+      "llm_correct": true
+    },
+    {
+      "incident_id": "INC-304AADB7",
+      "check_name": "orders_volume_drop_check",
+      "ground_truth_fault": "volume_drop",
+      "raw_log_baseline": "ERROR: Check orders_volume_drop_check failed. Details: {\"rule_id\": \"RULE-ANOMALY-002\", \"description\": \"Orders table volume falls below expected minimum threshold (Found 1 rows, expected >= 5)\", \"violation_count\": 1, \"sample_records\": [{\"table\": \"orders\", \"count\": 1, \"expected_min\": 5}]}",
+      "raw_log_correct": true,
+      "llm_root_cause_summary": "Data volume anomaly: ingested record count dropped drastically below expected operating volume threshold.",
+      "llm_suggested_fix": "Verify upstream service availability, network connectivity, and check upstream database replication queues.",
+      "llm_correct": true
+    },
+    {
+      "incident_id": "INC-D764CA8C",
       "check_name": "orders_volume_drop_check",
       "ground_truth_fault": "volume_drop",
       "raw_log_baseline": "ERROR: Check orders_volume_drop_check failed. Details: {\"rule_id\": \"RULE-ANOMALY-002\", \"description\": \"Orders table volume falls below expected minimum threshold (Found 1 rows, expected >= 5)\", \"violation_count\": 1, \"sample_records\": [{\"table\": \"orders\", \"count\": 1, \"expected_min\": 5}]}",
@@ -149,6 +329,6 @@
       "llm_correct": true
     }
   ],
-  "raw_log_baseline_accuracy": 0.857,
-  "llm_diagnostic_accuracy": 0.857
+  "raw_log_baseline_accuracy": 0.8,
+  "llm_diagnostic_accuracy": 0.96
 }

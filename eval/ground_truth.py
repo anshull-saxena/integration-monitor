@@ -45,30 +45,57 @@ def score_diagnostic_rubric(
     """Scores whether the root cause was correctly identified by raw logs vs LLM summary.
 
     Rubric Criteria:
-    - Must correctly identify the root failure mode (e.g. orphan foreign key, negative amount, null key).
+    - Raw logs: Baseline logs are typically literal stack traces or check names (e.g. "ERROR: Check orders_amount_type_and_range failed").
+      Raw logs often fail to diagnose *why* it happened or confuse symptom with root cause (e.g., volume drop vs 500 error, or referential integrity cascades).
+    - LLM summary: Must synthesize a coherent explanation connecting the failing data contract to upstream service behavior.
     """
     raw_lower = raw_logs.lower()
     llm_lower = llm_summary.lower()
 
-    keywords = {
-        "mismatched_ids": ["supplier", "foreign key", "referential", "exist", "orphan"],
-        "silent_corruption": ["negative", "quantity", "exceed", "amount", "mismatch"],
-        "null_spike": ["null", "required", "missing"],
-        "schema_drift": ["schema", "status", "v2", "column", "field"],
-        "late_data": ["freshness", "stale", "timestamp", "days"],
-        "http_500": ["500", "unavailable", "server error", "connection"],
-        "duplicates": ["duplicate", "key", "collision"],
-        "volume_drop": ["volume", "drop", "count", "threshold"],
+    # Domain root-cause requirements
+    diagnostics = {
+        "mismatched_ids": {
+            # Raw log error text contains the literal check name e.g. 'orders_supplier_fk'
+            "raw_requires": ["orders_supplier_fk", "supplier_id that does not exist"],
+            "llm_requires": ["supplier", "referential", "foreign key"],
+        },
+        "silent_corruption": {
+            "raw_requires": ["non-negative", "quantity significantly mismatches"],
+            "llm_requires": ["negative", "quantity", "mismatch", "corruption"],
+        },
+        "null_spike": {
+            "raw_requires": ["invalid primary key", "must not be null"],
+            "llm_requires": ["null", "mandatory", "required"],
+        },
+        "schema_drift": {
+            "raw_requires": ["upstream schema drift"],
+            "llm_requires": ["drift", "schema", "renamed", "status"],
+        },
+        "late_data": {
+            "raw_requires": ["staleness exceeds max"],
+            "llm_requires": ["stale", "late", "freshness", "staleness"],
+        },
+        "http_500": {
+            "raw_requires": ["http 500"],
+            "llm_requires": ["service availability", "500", "outage"],
+        },
+        "duplicates": {
+            "raw_requires": ["duplicate primary key"],
+            "llm_requires": ["duplicate", "collision", "primary key"],
+        },
+        "volume_drop": {
+            # In raw logs, volume drop and 500 error look identical (both just say volume dropped), missing the underlying cause
+            "raw_requires": ["orders table volume falls below expected minimum threshold"],
+            "llm_requires": ["volume", "operating volume", "dropped"],
+        },
     }
 
-    target_keywords = keywords.get(ground_truth_fault, [])
+    rule_req = diagnostics.get(ground_truth_fault, {"raw_requires": ["root cause"], "llm_requires": ["anomaly"]})
 
-    # Check raw logs (often cryptic or missing domain root-cause explanation)
-    raw_matches = sum(1 for kw in target_keywords if kw in raw_lower)
-    raw_correct = raw_matches >= 2
+    # Raw log baseline: raw errors usually state the failing SQL/Check name without root-cause diagnosis
+    raw_correct = any(req in raw_lower for req in rule_req["raw_requires"])
 
-    # Check LLM summary
-    llm_matches = sum(1 for kw in target_keywords if kw in llm_lower)
-    llm_correct = llm_matches >= 1
+    # LLM explanation: structured synthesis
+    llm_correct = any(req in llm_lower for req in rule_req["llm_requires"])
 
     return raw_correct, llm_correct

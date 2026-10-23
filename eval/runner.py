@@ -130,13 +130,19 @@ class EvaluationRunner:
 
                     # LLM Explanation enrichment
                     for inc in created_incidents:
+                        recent_logs = [{"event": "VALIDATION_FAILED", "rule": inc.check_name}]
+                        # If DLQ has records for this cycle, include them in pipeline logs context
+                        dlq_entries = session.query(DeadLetterModel).all()
+                        for d in dlq_entries[-3:]:
+                            recent_logs.append({"event": "DLQ_RECORD", "error_type": d.error_type, "message": d.error_message})
+
                         prompt = build_root_cause_prompt(
                             check_name=inc.check_name,
                             category=inc.rule_category,
                             severity=inc.severity,
                             details=inc.details,
                             affected_ids=inc.affected_record_ids or [],
-                            pipeline_logs=[{"event": "VALIDATION_FAILED", "rule": inc.check_name}],
+                            pipeline_logs=recent_logs,
                         )
                         explanation = self.llm_client.generate_explanation(prompt)
                         inc.root_cause_summary = explanation.root_cause_summary

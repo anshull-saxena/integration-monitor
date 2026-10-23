@@ -23,6 +23,12 @@ class MockLLMClient(BaseLLMClient):
                 raw_response="[MockLLM] Late data / freshness breach.",
             )
         elif "orders_volume_drop_check" in prompt_lower or "volume_drop" in prompt_lower or "volume falls below" in prompt_lower:
+            if "upstream_http_500" in prompt_lower or "500" in prompt_lower:
+                return LLMResponse(
+                    root_cause_summary="Upstream 500 outage: orders service experienced internal server errors resulting in uningested batches and zero warehouse volume.",
+                    suggested_fix="Inspect upstream orders microservice error logs, check upstream database connections, and review recent API deployments.",
+                    raw_response="[MockLLM] Upstream 500 outage leading to volume drop.",
+                )
             return LLMResponse(
                 root_cause_summary="Data volume anomaly: ingested record count dropped drastically below expected operating volume threshold.",
                 suggested_fix="Verify upstream service availability, network connectivity, and check upstream database replication queues.",
