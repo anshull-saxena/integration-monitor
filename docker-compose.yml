@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: integration-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: integration_warehouse
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d integration_warehouse"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+  supplier-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.mock
+    container_name: mock-supplier-service
+    ports:
+      - "8002:8000"
+    environment:
+      - SERVICE_ROLE=suppliers
+    depends_on:
+      - postgres
+
+  orders-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.mock
+    container_name: mock-orders-service
+    ports:
+      - "8001:8000"
+    environment:
+      - SERVICE_ROLE=orders
+    depends_on:
+      - postgres
+
+  shipments-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.mock
+    container_name: mock-shipments-service
+    ports:
+      - "8003:8000"
+    environment:
+      - SERVICE_ROLE=shipments
+    depends_on:
+      - postgres
+
+  monitor-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.monitor
+    container_name: integration-monitor-api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgrespassword@postgres:5432/integration_warehouse
+      - ORDERS_SERVICE_URL=http://orders-service:8000
+      - SUPPLIER_SERVICE_URL=http://supplier-service:8000
+      - SHIPMENTS_SERVICE_URL=http://shipments-service:8000
+      - LLM_PROVIDER=mock
+    depends_on:
+      postgres:
+        condition: service_healthy
+      supplier-service:
+        condition: service_started
+      orders-service:
+        condition: service_started
+      shipments-service:
+        condition: service_started
+
+volumes:
+  pgdata:

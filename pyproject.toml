@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "integration-monitor"
+version = "0.1.0"
+description = "Pipeline to ingest data, monitor data quality/integration failures, and explain root causes with LLMs"
+authors = [{ name = "Integration Monitor Maintainers" }]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.28.0",
+    "pydantic>=2.6.0",
+    "sqlalchemy>=2.0.28",
+    "psycopg2-binary>=2.9.9",
+    "requests>=2.31.0",
+    "httpx>=0.27.0",
+    "pyyaml>=6.0.1",
+    "streamlit>=1.32.0",
+    "python-dotenv>=1.0.1",
+    "tenacity>=8.2.3",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+lint.select = ["E", "F", "W"]
+lint.ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+pythonpath = ["."]
+asyncio_mode = "auto"
